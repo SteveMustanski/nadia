@@ -26,6 +26,8 @@ The server persists using a SQLite3 database named `database.sqlite` in the site
 This project uses EditorConfig to standarize text editor configuration.
 Vistit http://editorconfig.org for details.
 
+ESLint is used to highlight potential errors.
+
 ### Debugging
 
 This project uses https://www.npmjs.com/package/debug for development logging. To start `nodemon` and enable logging:
