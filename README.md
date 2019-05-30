@@ -28,6 +28,16 @@ Vistit http://editorconfig.org for details.
 
 ESLint is used to highlight potential errors.
 
+### Testing
+
+This project uses mocha and chai for testing.
+
+To execute the test suite:
+
+```bash
+npm test
+```
+
 ### Debugging
 
 This project uses https://www.npmjs.com/package/debug for development logging. To start `nodemon` and enable logging:
