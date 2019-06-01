@@ -4,6 +4,7 @@ const chai = require('chai');
 // eslint-disable-next-line no-unused-vars
 const should = chai.should()
 const Reservation = require('../../../lib/schema/reservation');
+const db = require('sqlite');
 
 describe('Reservations Library', function () {
   // set up stub for reservations
@@ -41,5 +42,38 @@ describe('Reservations Library', function () {
       return reservations.validate(reservation)
         .catch(error => error.should.be.an('error').and.not.be.null);
     })
+  })
+  context('create', function () {
+    let dbStub;
+
+    before(function () {
+      dbStub = sinon.stub(db, 'run').resolves({
+        stmt: {
+          lastID: 1349
+        }
+      });
+      reservations = proxyquire('../../../lib/reservations', {
+        debug: debugStub,
+        sqlite: dbStub
+      })
+    })
+    after(function () {
+      dbStub.restore();
+    });
+    it('should return the created reservation id', function (done) {
+      const reservation = new Reservation({
+        date: '2017/06/10',
+        time: '06:02 AM',
+        party: 4,
+        name: 'Family',
+        email: 'username@example.com'
+      });
+      reservations.create(reservation)
+        .then(lastID => {
+          lastID.should.deep.equal(1349);
+          done();
+        })
+        .catch(error => done(error));
+    });
   })
 })
